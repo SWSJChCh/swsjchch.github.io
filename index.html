@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samuel Johnson — Mathematical Biology, Oxford</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e1117;
+    --bg-card: #161b22;
+    --bg-card-hover: #1c2333;
+    --border: #30363d;
+    --border-bright: #484f58;
+    --text: #c9d1d9;
+    --text-dim: #8b949e;
+    --text-bright: #e6edf3;
+    --green: #3fb950;
+    --green-dim: #238636;
+    --green-bright: #56d364;
+    --blue: #58a6ff;
+    --purple: #bc8cff;
+    --orange: #d29922;
+    --cyan: #39d353;
+    --pink: #f778ba;
+    --red: #f85149;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    --serif: 'EB Garamond', Georgia, serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--mono);
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.7;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(circle, #21262d 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+
+  body > * { position: relative; z-index: 1; }
+
+  a { color: var(--blue); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--green-bright); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(14, 17, 23, 0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 900px; margin: 0 auto; padding: 0 1.5rem;
+    display: flex; align-items: center; justify-content: space-between; height: 56px;
+  }
+  .nav-name {
+    font-size: 0.85rem; font-weight: 600; color: var(--green);
+    text-decoration: none; letter-spacing: -0.02em;
+  }
+  .nav-name::before { content: '~/'; color: var(--text-dim); }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem; color: var(--text-dim); font-weight: 400;
+    text-decoration: none; transition: color 0.2s; letter-spacing: 0.02em;
+  }
+  .nav-links a::before { content: './'; color: var(--border-bright); }
+  .nav-links a:hover { color: var(--green); }
+
+  .mobile-toggle {
+    display: none; background: none; border: 1px solid var(--border);
+    cursor: pointer; padding: 6px 10px; border-radius: 4px;
+  }
+  .mobile-toggle span { display: block; width: 18px; height: 2px; background: var(--text); margin: 4px 0; }
+
+  /* HERO */
+  .hero {
+    max-width: 900px; margin: 0 auto; padding: 100px 1.5rem 60px;
+    display: grid; grid-template-columns: 200px 1fr; gap: 3rem; align-items: start;
+  }
+  .hero-photo {
+    position: relative; border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+  }
+  .hero-photo::before {
+    content: 'profile.jpg'; position: absolute; top: 0; left: 0; right: 0;
+    background: var(--bg-card); padding: 4px 10px; font-size: 0.65rem;
+    color: var(--text-dim); border-bottom: 1px solid var(--border); z-index: 2;
+  }
+  .hero-photo img {
+    width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
+    filter: grayscale(15%) contrast(1.05);
+  }
+  .hero-text { padding-top: 0.5rem; }
+  .hero-greeting { font-size: 0.78rem; color: var(--text-dim); margin-bottom: 0.5rem; }
+  .hero-greeting .comment { color: var(--green-dim); }
+  .hero-text h1 {
+    font-family: var(--serif); font-size: 2.8rem; font-weight: 700;
+    color: var(--text-bright); line-height: 1.1; margin-bottom: 0.75rem; letter-spacing: -0.03em;
+  }
+  .hero-subtitle {
+    font-size: 0.82rem; color: var(--text-dim); margin-bottom: 1.5rem; line-height: 1.6;
+  }
+  .hero-subtitle .hl-blue { color: var(--blue); }
+  .hero-subtitle .hl-purple { color: var(--purple); }
+
+  .hero-links { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.45rem 0.9rem; font-family: var(--mono); font-size: 0.75rem;
+    font-weight: 500; text-decoration: none; border-radius: 6px;
+    border: 1px solid var(--border); color: var(--text); background: var(--bg-card);
+    transition: all 0.2s;
+  }
+  .btn:hover { border-color: var(--green-dim); color: var(--green); background: rgba(56,211,83,0.05); }
+  .btn-primary { background: var(--green-dim); border-color: var(--green-dim); color: #fff; }
+  .btn-primary:hover { background: var(--green); border-color: var(--green); color: var(--bg); }
+  .btn svg { width: 14px; height: 14px; }
+
+  /* SECTIONS */
+  .wrapper { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+  section { padding: 3.5rem 0; border-top: 1px solid var(--border); }
+  .section-header { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 1.75rem; }
+  .section-header h2 {
+    font-family: var(--serif); font-size: 1.8rem; font-weight: 600;
+    color: var(--text-bright); letter-spacing: -0.02em;
+  }
+  .section-header .line-num {
+    font-size: 0.7rem; color: var(--text-dim); font-family: var(--mono); opacity: 0.6; min-width: 28px;
+  }
+
+  /* ABOUT */
+  .about-content { display: grid; grid-template-columns: 1fr 260px; gap: 2.5rem; }
+  .about-text { font-size: 0.88rem; line-height: 1.85; color: var(--text); }
+  .about-text p { margin-bottom: 1rem; }
+
+  .info-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.25rem; align-self: start;
+  }
+  .info-card h4 {
+    font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase;
+    letter-spacing: 0.1em; margin-bottom: 0.75rem;
+  }
+  .info-card h4::before { content: '# '; color: var(--green-dim); }
+  .tag-list { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .tag {
+    padding: 0.2rem 0.55rem; border: 1px solid var(--border); border-radius: 20px;
+    font-size: 0.7rem; color: var(--text-dim); transition: all 0.2s;
+  }
+  .tag:hover { border-color: var(--green-dim); color: var(--green); }
+
+  .education-list {
+    margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border);
+  }
+  .education-list h4 {
+    font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase;
+    letter-spacing: 0.1em; margin-bottom: 0.5rem;
+  }
+  .education-list h4::before { content: '# '; color: var(--green-dim); }
+  .edu-item { margin-bottom: 0.5rem; font-size: 0.75rem; line-height: 1.5; }
+  .edu-item .degree { color: var(--text); }
+  .edu-item .school { color: var(--text-dim); }
+
+  /* PUBLICATIONS */
+  .pub-list { display: flex; flex-direction: column; gap: 1rem; }
+  .pub-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+    overflow: hidden; display: grid; grid-template-columns: 180px 1fr;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .pub-card:hover { border-color: var(--border-bright); background: var(--bg-card-hover); }
+  .pub-visual {
+    position: relative;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+    border-right: 1px solid var(--border); min-height: 180px;
+  }
+  .pub-visual svg { width: 100%; height: 100%; }
+  .pub-details { padding: 1.25rem 1.5rem; display: flex; flex-direction: column; justify-content: center; }
+  .pub-venue {
+    font-size: 0.65rem; color: var(--orange); text-transform: uppercase;
+    letter-spacing: 0.08em; font-weight: 600; margin-bottom: 0.4rem;
+  }
+  .pub-title {
+    font-family: var(--serif); font-size: 1.15rem; font-weight: 600;
+    color: var(--text-bright); line-height: 1.4; margin-bottom: 0.4rem;
+  }
+  .pub-authors { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.6rem; line-height: 1.5; }
+  .pub-authors .me { color: var(--green); font-weight: 500; }
+  .pub-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .pub-link {
+    font-size: 0.7rem; padding: 0.2rem 0.5rem; border: 1px solid var(--border);
+    border-radius: 4px; color: var(--text-dim); text-decoration: none; transition: all 0.2s;
+  }
+  .pub-link:hover { border-color: var(--blue); color: var(--blue); }
+
+  .math-label { font-family: var(--mono); font-size: 7px; fill: var(--text-dim); opacity: 0.5; }
+
+  /* TEACHING */
+  .teaching-current-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1.5rem; margin-bottom: 1.25rem; border-left: 3px solid var(--green);
+  }
+  .teaching-current-card h3 {
+    font-family: var(--serif); font-size: 1.15rem; font-weight: 600;
+    color: var(--text-bright); margin-bottom: 0.2rem;
+  }
+  .teaching-current-card .meta { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.75rem; }
+  .teaching-current-card p { font-size: 0.82rem; color: var(--text); line-height: 1.7; }
+
+  .course-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.75rem; }
+  .chip {
+    padding: 0.2rem 0.6rem; background: rgba(56,211,83,0.06); border: 1px solid var(--green-dim);
+    border-radius: 4px; font-size: 0.7rem; color: var(--green); font-weight: 500;
+  }
+
+  .teaching-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.75rem; }
+  .teach-card {
+    padding: 1rem 1.25rem; border: 1px solid var(--border); border-radius: 6px;
+    background: var(--bg-card); transition: border-color 0.2s;
+  }
+  .teach-card:hover { border-color: var(--border-bright); }
+  .teach-card h4 { font-size: 0.82rem; color: var(--text-bright); font-weight: 500; margin-bottom: 0.15rem; }
+  .teach-card .meta { font-size: 0.7rem; color: var(--text-dim); line-height: 1.4; }
+  .teach-card .term { font-size: 0.65rem; color: var(--purple); font-weight: 600; letter-spacing: 0.04em; }
+
+  /* CONFERENCES */
+  .conf-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1.5rem; border-left: 3px solid var(--orange);
+  }
+  .conf-badge {
+    display: inline-block; padding: 0.15rem 0.5rem; background: rgba(210,153,34,0.12);
+    color: var(--orange); border-radius: 4px; font-size: 0.65rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;
+  }
+  .conf-card h3 {
+    font-family: var(--serif); font-size: 1.1rem; font-weight: 600;
+    color: var(--text-bright); margin-bottom: 0.25rem;
+  }
+  .conf-card .date { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 0.5rem; }
+  .conf-card p { font-size: 0.82rem; line-height: 1.7; color: var(--text); }
+
+  /* OUTREACH */
+  .outreach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .outreach-card {
+    padding: 1.25rem; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-card);
+  }
+  .outreach-card h4 { font-size: 0.85rem; color: var(--text-bright); font-weight: 500; margin-bottom: 0.2rem; }
+  .outreach-card .meta { font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.5rem; }
+  .outreach-card p { font-size: 0.78rem; color: var(--text); line-height: 1.65; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; }
+  .footer-inner { max-width: 900px; margin: 0 auto; }
+  .footer-email { font-size: 0.82rem; margin-bottom: 0.75rem; }
+  .footer-social { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+  .footer-social a {
+    display: flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px; border-radius: 6px; border: 1px solid var(--border);
+    color: var(--text-dim); transition: all 0.2s;
+  }
+  .footer-social a:hover { border-color: var(--green-dim); color: var(--green); }
+  .footer-social svg { width: 16px; height: 16px; }
+  .footer-copy { font-size: 0.65rem; color: var(--text-dim); }
+  .footer-copy .comment { color: var(--green-dim); }
+
+  /* ANIMATIONS */
+  .fade-up { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-up.vis { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding: 90px 1.5rem 40px; gap: 1.5rem; }
+    .hero-photo { max-width: 160px; }
+    .hero-text h1 { font-size: 2rem; }
+    .nav-links { display: none; }
+    .mobile-toggle { display: block; }
+    .nav-links.open {
+      display: flex; flex-direction: column; position: absolute; top: 56px; left: 0; right: 0;
+      background: rgba(14,17,23,0.95); padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border); gap: 0.75rem;
+    }
+    .about-content { grid-template-columns: 1fr; }
+    .pub-card { grid-template-columns: 1fr; }
+    .pub-visual { min-height: 120px; }
+    .outreach-grid { grid-template-columns: 1fr; }
+    .teaching-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#top" class="nav-name">sam.johnson</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">about</a></li>
+      <li><a href="#publications">publications</a></li>
+      <li><a href="#teaching">teaching</a></li>
+      <li><a href="#conferences">conferences</a></li>
+      <li><a href="#outreach">outreach</a></li>
+    </ul>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-photo fade-up">
+    <img src="https://lh3.googleusercontent.com/sitesv/AA5AbUDklkPSg5_AP3nNIrYSxoLYNuSFH1jQ1YA54cheiyes34N-zMa_Frdax1wAijJink2ONuNrFM95YE9wF-H7l-qcRBQIWhjGeBZrFbA4No4Hc_i3R6Up6MSN7ehrwidZNsM8DL6nRriY2EE6eBFQW7fNZ6QKaT-y5lmeNXkDxjmCwYXEPObmPhuk2bQCeZpMWmwQPedZHQfUg6s-PLLmUAtHnY6Bptxcy4gdqBY=w600" alt="Samuel Johnson">
+  </div>
+  <div class="hero-text fade-up" style="transition-delay:0.1s">
+    <div class="hero-greeting"><span class="comment">// hello, world</span></div>
+    <h1>Samuel Johnson</h1>
+    <div class="hero-subtitle">
+      D.Phil. student in <span class="hl-blue">Mathematical Biology</span> at the
+      <a href="https://www.maths.ox.ac.uk/groups/mathematical-biology">Wolfson Centre for Mathematical Biology</a>,
+      University of Oxford<br>
+      Stipendiary Lecturer in <span class="hl-purple">Applied Mathematics</span> at
+      <a href="https://www.lmh.ox.ac.uk/">Lady Margaret Hall</a>, Oxford
+    </div>
+    <div class="hero-links">
+      <a href="https://drive.google.com/file/d/1mG3urHw85gDY18wdfDnMxdLl0WyZ5ybd/view?usp=sharing" class="btn btn-primary" target="_blank">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/></svg>
+        cv.pdf
+      </a>
+      <a href="mailto:samuel.johnson@chch.ox.ac.uk" class="btn">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>
+        email
+      </a>
+      <a href="https://scholar.google.com/citations?user=SShewsoAAAAJ" class="btn" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z"/></svg>
+        scholar
+      </a>
+      <a href="https://twitter.com/SWSJohnson" class="btn" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        twitter
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="wrapper">
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-header fade-up">
+      <span class="line-num">01</span>
+      <h2>About</h2>
+    </div>
+    <div class="about-content">
+      <div class="about-text fade-up" style="transition-delay:0.1s">
+        <p>I'm a D.Phil. (PhD) student supervised by <a href="https://people.maths.ox.ac.uk/maini/">Prof. Philip Maini</a> and <a href="https://www.maths.ox.ac.uk/people/ruth.baker">Prof. Ruth Baker</a>. My research concerns the construction and analysis of mathematical models of both single and collective cell migration, using the cranial neural crest as a model paradigm.</p>
+        <p>In March 2026, I will take up a role as a Post-Doctoral Research Associate in Mathematical Epidemiology under <a href="https://www.maths.ox.ac.uk/people/robin.thompson">Prof. Robin Thompson</a>, also at the Mathematical Institute.</p>
+        <p>I also enjoy working on other problems in mathematical biology, drawing on techniques including graph theory, optimal control theory, solid mechanics, and percolation theory.</p>
+        <p>I'm always keen to talk about maths and looking for new collaborations — please reach out!</p>
+      </div>
+      <div class="fade-up" style="transition-delay:0.15s">
+        <div class="info-card">
+          <h4>Research Interests</h4>
+          <div class="tag-list">
+            <span class="tag">cell migration</span>
+            <span class="tag">neural crest</span>
+            <span class="tag">epidemiology</span>
+            <span class="tag">agent-based models</span>
+            <span class="tag">graph theory</span>
+            <span class="tag">optimal control</span>
+            <span class="tag">solid mechanics</span>
+            <span class="tag">percolation theory</span>
+          </div>
+          <div class="education-list">
+            <h4>Education</h4>
+            <div class="edu-item">
+              <div class="degree">D.Phil. Mathematics</div>
+              <div class="school">University of Oxford</div>
+            </div>
+            <div class="edu-item">
+              <div class="degree">MASt Applied Mathematics</div>
+              <div class="school">University of Cambridge<br><span style="color:var(--border-bright)">(Gonville & Caius)</span></div>
+            </div>
+            <div class="edu-item">
+              <div class="degree">BSc Theoretical Physics</div>
+              <div class="school">University of Edinburgh</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <div class="section-header fade-up">
+      <span class="line-num">02</span>
+      <h2>Publications</h2>
+    </div>
+
+    <div class="pub-list">
+
+      <!-- Pub 1 -->
+      <div class="pub-card fade-up">
+        <div class="pub-visual">
+          <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="c1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#3fb950" stop-opacity="0.3"/><stop offset="100%" stop-color="#3fb950" stop-opacity="0"/></radialGradient>
+              <radialGradient id="c2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#58a6ff" stop-opacity="0.25"/><stop offset="100%" stop-color="#58a6ff" stop-opacity="0"/></radialGradient>
+              <marker id="aG" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0 L6,3 L0,6" fill="#3fb950"/></marker>
+            </defs>
+            <g stroke="#21262d" stroke-width="0.5" opacity="0.5">
+              <line x1="0" y1="45" x2="180" y2="45"/><line x1="0" y1="90" x2="180" y2="90"/><line x1="0" y1="135" x2="180" y2="135"/>
+              <line x1="45" y1="0" x2="45" y2="180"/><line x1="90" y1="0" x2="90" y2="180"/><line x1="135" y1="0" x2="135" y2="180"/>
+            </g>
+            <circle cx="140" cy="55" r="14" fill="url(#c1)" stroke="#3fb950" stroke-width="1"/>
+            <circle cx="130" cy="85" r="12" fill="url(#c1)" stroke="#3fb950" stroke-width="1"/>
+            <circle cx="145" cy="110" r="11" fill="url(#c1)" stroke="#3fb950" stroke-width="1"/>
+            <circle cx="95" cy="50" r="10" fill="url(#c2)" stroke="#58a6ff" stroke-width="0.8"/>
+            <circle cx="80" cy="75" r="11" fill="url(#c2)" stroke="#58a6ff" stroke-width="0.8"/>
+            <circle cx="100" cy="95" r="9" fill="url(#c2)" stroke="#58a6ff" stroke-width="0.8"/>
+            <circle cx="85" cy="115" r="10" fill="url(#c2)" stroke="#58a6ff" stroke-width="0.8"/>
+            <circle cx="70" cy="55" r="8" fill="url(#c2)" stroke="#58a6ff" stroke-width="0.8"/>
+            <circle cx="60" cy="95" r="9" fill="url(#c2)" stroke="#58a6ff" stroke-width="0.8"/>
+            <circle cx="105" cy="125" r="8" fill="url(#c2)" stroke="#58a6ff" stroke-width="0.8"/>
+            <g stroke="#3fb950" stroke-width="1" fill="none" opacity="0.6" marker-end="url(#aG)">
+              <line x1="148" y1="52" x2="162" y2="45"/><line x1="139" y1="82" x2="155" y2="78"/><line x1="152" y1="108" x2="166" y2="103"/>
+            </g>
+            <text x="155" y="140" class="math-label" fill="#3fb950" opacity="0.5">&#8711;VEGF &#8594;</text>
+            <text x="35" y="145" class="math-label">followers</text>
+            <text x="120" y="145" class="math-label" fill="#3fb950" opacity="0.6">leaders</text>
+          </svg>
+        </div>
+        <div class="pub-details">
+          <div class="pub-venue">arXiv Preprint &middot; 2026</div>
+          <div class="pub-title">The spontaneous emergence of leaders and followers in a mathematical model of cranial neural crest cell migration</div>
+          <div class="pub-authors"><span class="me">S.W.S. Johnson</span>, R.E. Baker, P.K. Maini</div>
+          <div class="pub-meta">
+            <a href="https://arxiv.org/abs/2601.00374" class="pub-link" target="_blank">arXiv:2601.00374</a>
+            <a href="https://arxiv.org/pdf/2601.00374" class="pub-link" target="_blank">PDF</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pub 2 -->
+      <div class="pub-card fade-up">
+        <div class="pub-visual">
+          <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="#21262d" stroke-width="0.5" opacity="0.5">
+              <line x1="0" y1="45" x2="180" y2="45"/><line x1="0" y1="90" x2="180" y2="90"/><line x1="0" y1="135" x2="180" y2="135"/>
+              <line x1="45" y1="0" x2="45" y2="180"/><line x1="90" y1="0" x2="90" y2="180"/><line x1="135" y1="0" x2="135" y2="180"/>
+            </g>
+            <path d="M20,40 Q50,35 80,42 Q110,48 140,38 Q160,33 175,36" stroke="#bc8cff" stroke-width="12" fill="none" opacity="0.12" stroke-linecap="round"/>
+            <path d="M20,90 Q50,85 80,92 Q110,98 140,88 Q160,83 175,86" stroke="#58a6ff" stroke-width="12" fill="none" opacity="0.12" stroke-linecap="round"/>
+            <path d="M20,140 Q50,135 80,142 Q110,148 140,138 Q160,133 175,136" stroke="#3fb950" stroke-width="12" fill="none" opacity="0.12" stroke-linecap="round"/>
+            <g fill="#bc8cff" opacity="0.7">
+              <circle cx="30" cy="40" r="3.5"/><circle cx="50" cy="37" r="3"/><circle cx="70" cy="40" r="4"/><circle cx="90" cy="43" r="3"/><circle cx="110" cy="45" r="3.5"/><circle cx="130" cy="40" r="3"/><circle cx="150" cy="36" r="4"/><circle cx="42" cy="43" r="2.5"/>
+            </g>
+            <g fill="#58a6ff" opacity="0.7">
+              <circle cx="30" cy="90" r="3.5"/><circle cx="50" cy="87" r="3"/><circle cx="70" cy="90" r="4"/><circle cx="90" cy="93" r="3"/><circle cx="110" cy="95" r="3.5"/><circle cx="130" cy="90" r="3"/><circle cx="150" cy="86" r="4"/>
+            </g>
+            <g fill="#3fb950" opacity="0.7">
+              <circle cx="30" cy="140" r="3.5"/><circle cx="50" cy="137" r="3"/><circle cx="70" cy="140" r="4"/><circle cx="90" cy="143" r="3"/><circle cx="110" cy="145" r="3.5"/><circle cx="130" cy="140" r="3"/><circle cx="150" cy="136" r="4"/>
+            </g>
+            <text x="8" y="28" class="math-label" fill="#bc8cff" opacity="0.6">stream 1 (r1-r2)</text>
+            <text x="8" y="78" class="math-label" fill="#58a6ff" opacity="0.6">stream 2 (r4)</text>
+            <text x="8" y="128" class="math-label" fill="#3fb950" opacity="0.6">stream 3 (r6-r7)</text>
+            <text x="8" y="170" class="math-label">Trail &middot; Colec12 &middot; Dan</text>
+          </svg>
+        </div>
+        <div class="pub-details">
+          <div class="pub-venue">Developmental Dynamics &middot; 2026</div>
+          <div class="pub-title">Mathematical modelling predicts novel mechanisms of stream confinement from Trail/Colec12/Dan in collective cranial neural crest cell migration</div>
+          <div class="pub-authors"><span class="me">S.W.S. Johnson</span>, P.M. Kulesa, R.E. Baker, P.K. Maini</div>
+          <div class="pub-meta">
+            <a href="https://anatomypubs.onlinelibrary.wiley.com/doi/10.1002/dvdy.70072" class="pub-link" target="_blank">doi:10.1002/dvdy.70072</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pub 3 -->
+      <div class="pub-card fade-up">
+        <div class="pub-visual">
+          <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="#21262d" stroke-width="0.5" opacity="0.5">
+              <line x1="0" y1="45" x2="180" y2="45"/><line x1="0" y1="90" x2="180" y2="90"/><line x1="0" y1="135" x2="180" y2="135"/>
+              <line x1="45" y1="0" x2="45" y2="180"/><line x1="90" y1="0" x2="90" y2="180"/><line x1="135" y1="0" x2="135" y2="180"/>
+            </g>
+            <g>
+              <circle cx="85" cy="75" r="3" fill="#f778ba" opacity="0.8"/><line x1="85" y1="75" x2="92" y2="70" stroke="#f778ba" stroke-width="0.8" opacity="0.5"/>
+              <circle cx="95" cy="90" r="3" fill="#f778ba" opacity="0.8"/><line x1="95" y1="90" x2="103" y2="86" stroke="#f778ba" stroke-width="0.8" opacity="0.5"/>
+              <circle cx="75" cy="95" r="3" fill="#f778ba" opacity="0.8"/><line x1="75" y1="95" x2="83" y2="91" stroke="#f778ba" stroke-width="0.8" opacity="0.5"/>
+              <circle cx="90" cy="105" r="3" fill="#f778ba" opacity="0.8"/><line x1="90" y1="105" x2="98" y2="101" stroke="#f778ba" stroke-width="0.8" opacity="0.5"/>
+              <circle cx="105" cy="80" r="3" fill="#f778ba" opacity="0.8"/><line x1="105" y1="80" x2="113" y2="76" stroke="#f778ba" stroke-width="0.8" opacity="0.5"/>
+              <circle cx="70" cy="80" r="3" fill="#f778ba" opacity="0.8"/><line x1="70" y1="80" x2="78" y2="76" stroke="#f778ba" stroke-width="0.8" opacity="0.5"/>
+              <circle cx="100" cy="100" r="3" fill="#f778ba" opacity="0.8"/><line x1="100" y1="100" x2="108" y2="96" stroke="#f778ba" stroke-width="0.8" opacity="0.5"/>
+              <circle cx="80" cy="110" r="3" fill="#f778ba" opacity="0.8"/><line x1="80" y1="110" x2="88" y2="106" stroke="#f778ba" stroke-width="0.8" opacity="0.5"/>
+              <circle cx="65" cy="90" r="3" fill="#f778ba" opacity="0.8"/><line x1="65" y1="90" x2="73" y2="86" stroke="#f778ba" stroke-width="0.8" opacity="0.5"/>
+              <circle cx="110" cy="95" r="3" fill="#f778ba" opacity="0.8"/><line x1="110" y1="95" x2="118" y2="91" stroke="#f778ba" stroke-width="0.8" opacity="0.5"/>
+              <circle cx="88" cy="60" r="3" fill="#f778ba" opacity="0.8"/><line x1="88" y1="60" x2="96" y2="56" stroke="#f778ba" stroke-width="0.8" opacity="0.5"/>
+              <circle cx="115" cy="110" r="3" fill="#f778ba" opacity="0.8"/><line x1="115" y1="110" x2="123" y2="106" stroke="#f778ba" stroke-width="0.8" opacity="0.5"/>
+            </g>
+            <line x1="30" y1="140" x2="160" y2="50" stroke="#f778ba" stroke-width="0.5" stroke-dasharray="4,3" opacity="0.3"/>
+            <text x="8" y="170" class="math-label" fill="#f778ba" opacity="0.6">collective motion</text>
+          </svg>
+        </div>
+        <div class="pub-details">
+          <div class="pub-venue">The Conversation &middot; 2023</div>
+          <div class="pub-title">How swarming animals can help humans and AI make better decisions</div>
+          <div class="pub-authors"><span class="me">S.W.S. Johnson</span></div>
+          <div class="pub-meta">
+            <a href="https://theconversation.com/how-swarming-animals-can-help-humans-and-ai-make-better-decisions-209180" class="pub-link" target="_blank">Read article</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TEACHING -->
+  <section id="teaching">
+    <div class="section-header fade-up">
+      <span class="line-num">03</span>
+      <h2>Teaching</h2>
+    </div>
+    <div class="teaching-current-card fade-up">
+      <h3>Stipendiary Lecturer in Applied Mathematics</h3>
+      <div class="meta"><a href="https://www.lmh.ox.ac.uk/">Lady Margaret Hall</a>, University of Oxford &middot; 2023&ndash;Present</div>
+      <p>Teaching multiple undergraduate courses, conducting admissions interviews for prospective students, and serving as a personal tutor.</p>
+      <div class="course-chips">
+        <span class="chip">Geometry</span>
+        <span class="chip">Fourier Series &amp; PDEs</span>
+        <span class="chip">Mathematical Biology</span>
+        <span class="chip">Numerical Analysis</span>
+      </div>
+    </div>
+    <div class="teaching-grid">
+      <div class="teach-card fade-up"><h4>ASO Graph Theory</h4><div class="meta">Balliol College, Oxford</div><div class="term">Trinity 2023</div></div>
+      <div class="teach-card fade-up"><h4>C5.4 Networks</h4><div class="meta">Mathematical Institute, Oxford</div><div class="term">Michaelmas 2022</div></div>
+      <div class="teach-card fade-up"><h4>Math Model Building in Biomedicine</h4><div class="meta">Doctoral Training Centre, Oxford</div><div class="term">Michaelmas 2022</div></div>
+      <div class="teach-card fade-up"><h4>Essential Mathematics</h4><div class="meta">Doctoral Training Centre, Oxford</div><div class="term">Michaelmas 2022</div></div>
+    </div>
+  </section>
+
+  <!-- CONFERENCES -->
+  <section id="conferences">
+    <div class="section-header fade-up">
+      <span class="line-num">04</span>
+      <h2>Conferences</h2>
+    </div>
+    <div class="conf-card fade-up">
+      <span class="conf-badge">Honourable Mention &mdash; Poster Prize</span>
+      <h3><a href="https://www.cecam.org/workshop-details/1173">The Extracellular Matrix: How to Model Structure Complexity</a></h3>
+      <div class="date">March 2023 &middot; Poster Presentation</div>
+      <p>Presented a poster entitled <em>&ldquo;Follow the Leader: Collective Cell Migration in the Cranial Neural Crest&rdquo;</em>, receiving a prize of honourable mention.</p>
+    </div>
+  </section>
+
+  <!-- OUTREACH -->
+  <section id="outreach">
+    <div class="section-header fade-up">
+      <span class="line-num">05</span>
+      <h2>Outreach</h2>
+    </div>
+    <div class="outreach-grid fade-up">
+      <div class="outreach-card">
+        <h4>UNIQ Mentor</h4>
+        <div class="meta">Mathematical Institute, Oxford</div>
+        <p>Running mock tutorials for prospective undergraduates, familiarising them with the Oxford system and teaching style.</p>
+      </div>
+      <div class="outreach-card">
+        <h4>AMSP Mentor</h4>
+        <div class="meta">Mathematical Institute, Oxford</div>
+        <p>Leading classes for prospective undergraduates, working through selected problems with a focus on problem-solving techniques and logical reasoning.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-inner">
+    <div class="footer-email"><a href="mailto:samuel.johnson@chch.ox.ac.uk">samuel.johnson@chch.ox.ac.uk</a></div>
+    <div class="footer-social">
+      <a href="https://twitter.com/SWSJohnson" target="_blank" aria-label="Twitter">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <a href="https://uk.linkedin.com/in/samuel-johnson-23a789211" target="_blank" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+      </a>
+      <a href="https://scholar.google.com/citations?user=SShewsoAAAAJ" target="_blank" aria-label="Scholar">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z"/></svg>
+      </a>
+    </div>
+    <p class="footer-copy"><span class="comment">/* </span>&copy; 2026 Samuel Johnson &middot; Mathematical Institute, University of Oxford<span class="comment"> */</span></p>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  document.getElementById('mobileToggle').addEventListener('click', () => {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+</script>
+
+</body>
+</html>
