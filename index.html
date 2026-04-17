@@ -97,13 +97,8 @@
   .hero-photo {
     position: relative; border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
   }
-  .hero-photo::before {
-    content: 'profile.jpg'; position: absolute; top: 0; left: 0; right: 0;
-    background: var(--bg-card); padding: 4px 10px; font-size: 0.65rem;
-    color: var(--text-dim); border-bottom: 1px solid var(--border); z-index: 2;
-  }
   .hero-photo img {
-  width: 100%; aspect-ratio: 1; object-fit: cover; object-position: top; display: block;
+  width: 100%; aspect-ratio: 1; object-fit: cover; object-position: center 15%; display: block;
   filter: grayscale(15%) contrast(1.05);
   }
   .hero-text { padding-top: 0.5rem; }
@@ -313,7 +308,7 @@
     <a href="#top" class="nav-name">sam.johnson</a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">about</a></li>
-      <li><a href="#publications">publications</a></li>
+      <li><a href="#publications">publications &amp; pre-prints</a></li>
       <li><a href="#teaching">teaching</a></li>
       <li><a href="#conferences">conferences</a></li>
       <li><a href="#outreach">outreach</a></li>
@@ -409,7 +404,7 @@
   <section id="publications">
     <div class="section-header fade-up">
       <span class="line-num">02</span>
-      <h2>Publications</h2>
+      <h2>Publications &amp; Pre-prints</h2>
     </div>
 
     <div class="pub-list">
