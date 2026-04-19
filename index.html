@@ -272,6 +272,37 @@
   .outreach-card .meta { font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.5rem; }
   .outreach-card p { font-size: 0.78rem; color: var(--text); line-height: 1.65; }
 
+  /* AWARDS */
+  .awards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0.75rem;
+  }
+  .award-card {
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--orange);
+    border-radius: 6px;
+    background: var(--bg-card);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .award-card:hover {
+    border-color: var(--border-bright);
+    background: var(--bg-card-hover);
+  }
+  .award-card h4 {
+    font-size: 0.85rem;
+    color: var(--text-bright);
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+    line-height: 1.4;
+  }
+  .award-card .meta {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
   /* FOOTER */
   footer { border-top: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; }
   .footer-inner { max-width: 900px; margin: 0 auto; }
@@ -511,12 +542,14 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
 
   <!-- AWARDS -->
   <section id="awards">
     <div class="section-header fade-up">
-      <span class="line-num">05</span>
+      <span class="line-num">03</span>
       <h2>Awards &amp; Honours</h2>
     </div>
     <div class="awards-grid fade-up">
@@ -558,7 +591,7 @@
   <!-- TEACHING -->
   <section id="teaching">
     <div class="section-header fade-up">
-      <span class="line-num">03</span>
+      <span class="line-num">04</span>
       <h2>Teaching</h2>
     </div>
     <div class="teaching-current-card fade-up">
@@ -583,7 +616,7 @@
   <!-- CONFERENCES -->
   <section id="conferences">
     <div class="section-header fade-up">
-      <span class="line-num">04</span>
+      <span class="line-num">05</span>
       <h2>Conferences</h2>
     </div>
     <div class="conf-card fade-up">
@@ -603,7 +636,7 @@
   <!-- OUTREACH -->
   <section id="outreach">
     <div class="section-header fade-up">
-      <span class="line-num">05</span>
+      <span class="line-num">06</span>
       <h2>Outreach</h2>
     </div>
     <div class="outreach-grid fade-up">
