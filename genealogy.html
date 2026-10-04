@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An interactive, source-linked view of Samuel Johnson’s mathematical ancestry, from Maini, Baker and Murray to notable figures in mathematics and astronomy.">
+  <meta name="color-scheme" content="dark">
+  <title>Mathematical genealogy · Samuel Johnson</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%233fb950'/%3E%3Ctext x='50' y='70' font-family='monospace' font-weight='700' font-size='54' fill='%230e1117' text-anchor='middle'%3ESJ%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/genealogy.css">
+  <script src="assets/genealogy-data.js" defer></script>
+  <script src="assets/genealogy.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#explorer">Skip to the interactive tree</a>
+<nav class="site-nav" aria-label="Main navigation"><div class="nav-inner"><a class="nav-name" href="index.html">samuel.johnson</a><div class="nav-links"><a href="index.html">home</a><a href="genealogy.html" aria-current="page">genealogy</a><button type="button" data-open-sources>about the data ↗</button></div></div></nav>
+<main class="page">
+  <header class="section-header">
+    <span class="section-number" aria-hidden="true">09</span>
+    <h1 class="section-title" id="genealogy-heading">Mathematical genealogy</h1>
+  </header>
+  <section class="explorer" id="explorer" aria-labelledby="genealogy-heading">
+    <div class="toolbar">
+      <div class="segmented views" role="group" aria-label="People to display">
+        <button type="button" data-view="highlights" aria-pressed="true">Highlights <span class="count" id="highlight-count">16</span></button>
+        <button type="button" data-view="all" aria-pressed="false">All connections <span class="count" id="all-count">48</span></button>
+        <button type="button" data-view="recent" aria-pressed="false">Close family</button>
+      </div>
+      <div class="toolbar-right">
+        <div class="search-wrap"><span class="search-symbol" aria-hidden="true">⌕</span><label class="sr-only" for="person-search">Find a person or subject</label><input type="search" id="person-search" placeholder="Find a name or subject…" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="search-results" autocomplete="off" spellcheck="false"><kbd class="search-key" aria-hidden="true">/</kbd><ul class="search-results" id="search-results" role="listbox" aria-label="Matching people" hidden></ul></div>
+        <button type="button" class="icon-button list-toggle" id="list-toggle" title="Switch to list view" aria-label="Switch to list view" aria-pressed="false"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M8 5h13M8 12h13M8 19h13M3 5h.01M3 12h.01M3 19h.01"/></svg></button>
+      </div>
+    </div>
+    <div class="error-message" id="error-message" hidden></div>
+    <noscript><p class="no-script">JavaScript is required for the interactive tree. <a href="https://schnell-lab.nd.edu/files/math-genealogy.pdf">Read the historical genealogy source instead.</a></p></noscript>
+    <div class="explorer-body">
+      <div class="map-column">
+        <div class="map-shell" id="map-shell">
+          <div class="map-caption"><span class="map-dot"></span><span id="view-count">16 selected people</span><span class="caption-separator">/</span><span id="map-description">select a name or a + connection</span></div>
+          <svg id="genealogy-map" class="genealogy-map" role="group" tabindex="0" aria-label="Academic genealogy. Tab to a person or a collapsed connection, then press Enter. Use arrow keys to pan." aria-describedby="map-help" xmlns="http://www.w3.org/2000/svg">
+            <defs><marker id="arrow-normal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="#7b92a8" stroke-width="1.5"/></marker><marker id="arrow-active" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1 1L9 5L1 9" fill="none" stroke="#56d364" stroke-width="1.5"/></marker></defs>
+            <g id="graph-world"><g id="graph-links"></g><g id="graph-nodes"></g></g>
+          </svg>
+          <div class="map-controls" role="group" aria-label="Graph controls"><button type="button" id="zoom-out" title="Zoom out" aria-label="Zoom out">−</button><output id="zoom-level" aria-label="Zoom level">100%</output><button type="button" id="zoom-in" title="Zoom in" aria-label="Zoom in">+</button><span class="control-separator"></span><button type="button" id="fit-view" title="Fit the tree (F)" aria-label="Fit the tree"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M3 16v5h5M21 16v5h-5M8 8h8v8H8z"/></svg></button><button type="button" id="route-toggle" title="Highlight the selected person’s routes" aria-label="Highlight the selected person’s routes" aria-pressed="false"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><path d="M6 7v3c0 3 6 1 6 5v2M18 7v3c0 3-6 1-6 5"/></svg></button><button type="button" id="fullscreen" title="Full screen" aria-label="Enter full screen"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M9 3H3v6M15 3h6v6M3 15v6h6M21 15v6h-6"/></svg></button></div>
+          <button type="button" class="overview" id="overview" title="Fit the complete displayed tree" aria-label="Overview: fit the displayed tree"><span>overview</span><svg id="mini-map" viewBox="0 0 130 142" aria-hidden="true"><g id="mini-world"></g><rect id="mini-viewport" class="mini-viewport"/></svg></button>
+        </div>
+        <div class="list-shell" id="list-shell" hidden><p class="list-intro">Select a name to read a short biography and explore their work.</p><table class="people-table"><caption class="sr-only">People in the selected academic ancestry</caption><thead><tr><th scope="col">Person</th><th scope="col">Dates</th><th scope="col">Field / record</th></tr></thead><tbody id="people-list"></tbody></table></div>
+        <div class="map-help" id="map-help"><span class="desktop-help">Drag to move · Ctrl/⌘ + scroll to zoom</span><span class="touch-help">Drag to move · Pinch to zoom</span><span>Arrows point towards the student</span></div>
+      </div>
+      <aside class="person-panel" id="person-panel" aria-labelledby="biography-title"><div id="person-details" aria-live="polite"></div></aside>
+    </div>
+    <div class="explorer-footer"><div class="legend"><span><i class="line-sample"></i>Recorded connection</span><span><i class="line-sample dashed"></i>Collapsed path <b>+n</b></span><span class="history-key"><i class="history-dot"></i>Historical study / mentorship</span></div><div class="export-actions"><button type="button" id="export-svg">Save SVG ↓</button><button type="button" data-open-sources>Sources ↗</button><button type="button" id="export-data">Data ↓</button></div></div>
+  </section>
+</main>
+<dialog id="sources-dialog" class="sources-dialog" aria-labelledby="sources-title"><div class="dialog-heading"><div><div class="eyebrow">// provenance</div><h2 id="sources-title">About this genealogy</h2></div><button type="button" id="close-sources" class="icon-button" aria-label="Close source notes">×</button></div><div class="dialog-content"><p>This is a <strong>curated selection of 48 people</strong>, not the full Mathematics Genealogy Project tree. The close-family view includes Samuel, Ruth Baker, Philip Maini and J. D. Murray. The wider views follow selected earlier branches.</p><p><strong>Highlights</strong> shows 16 names. A dashed connection and a <strong>+n</strong> badge stand for the intermediate people, not direct supervision. Select the badge to read the complete chain; “All connections” shows all 48 included people. Several routes may share the same ancestor.</p><p><strong>Historical links are different.</strong> Early genealogies include teachers, mentors and scholarly study as well as formal degree advisers. They are marked in amber and should not be interpreted as modern PhD supervision. Some early links are inherited from MGP-derived historical transcriptions, rather than independently established here.</p><p>Each connection has its own source. The 2019 poster is an archived MGP-derived snapshot; accessible MGP records and academic transcriptions supplement it. The page does not query MGP live. Birth and death dates shown on highlighted historical cards are lifespans, not degree dates; additional date discrepancies are retained in the individual record notes below and in the downloadable data.</p><p>Samuel’s entry is based on his Oxford profile, personal website and the Baker Group. No MGP registration is claimed for him. Missing advisers at the ends of this selection do not mean none are known. Biography links describe a person’s work; they do not independently establish every genealogy connection.</p><details class="record-notes"><summary>Individual record notes</summary><div id="record-notes"></div></details><h3>Genealogy sources</h3><div id="source-list"></div><p class="source-credit">An independent presentation of Mathematics Genealogy Project-derived information. The archived poster credits North Dakota State University and the American Mathematical Society. Biographical reading includes the University of St Andrews’ MacTutor History of Mathematics archive.</p></div></dialog>
+<dialog id="connection-dialog" class="sources-dialog connection-dialog" aria-labelledby="connection-title">
+  <div class="dialog-heading"><h2 id="connection-title">Connection</h2><button type="button" id="close-connection" class="icon-button" aria-label="Close connection">×</button></div>
+  <div id="connection-details" class="dialog-content"></div>
+</dialog>
+<div class="sr-only" id="live-status" role="status" aria-live="polite"></div><div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
