@@ -276,7 +276,7 @@
       "caption": "DPhil 2026 · Oxford",
       "dateLabel": "2026",
       "dateKind": "Qualification year",
-      "description": "Samuel Johnson works in mathematical biology, developing mathematical models of cell migration.",
+      "description": "Me.",
       "reading": [
         {
           "label": "Oxford profile",
@@ -290,7 +290,7 @@
     },
     {
       "id": "maini",
-      "name": "Philip K. Maini",
+      "name": "Philip Kumar Maini",
       "label": "Philip K. Maini",
       "year": "1985",
       "institution": "University of Oxford",
@@ -311,7 +311,7 @@
       "caption": "DPhil 1985 · Oxford",
       "dateLabel": "1985",
       "dateKind": "Qualification year",
-      "description": "Philip Maini is a mathematical biologist whose work explores pattern formation and developmental processes.",
+      "description": "Philip Maini is a mathematical biologist whose work explores pattern formation and developmental processes. He is the director of the Wolfson Centre for Mathematical Biology.",
       "reading": [
         {
           "label": "Wikipedia",
@@ -347,7 +347,7 @@
       "caption": "DPhil 2005 · Oxford",
       "dateLabel": "2005",
       "dateKind": "Qualification year",
-      "description": "Ruth Baker works on mathematical and computational modelling in biology.",
+      "description": "Ruth Baker works on mathematical and computational modelling in biology. She is the head of the Developmental Biology group in the Wolfson Centre for Mathematical Biology.",
       "reading": [
         {
           "label": "Wikipedia",
