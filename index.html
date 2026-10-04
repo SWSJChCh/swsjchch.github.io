@@ -173,6 +173,34 @@
   .edu-item .degree { color: var(--text); }
   .edu-item .school { color: var(--text-dim); }
 
+  .thesis-entry {
+    margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border);
+  }
+  .thesis-link {
+    display: grid; grid-template-columns: 80px minmax(0, 1fr);
+    column-gap: 0.75rem; row-gap: 0.5rem; align-items: start;
+    border-radius: 4px; color: var(--text);
+  }
+  .thesis-link:focus-visible { outline: 2px solid var(--green); outline-offset: 6px; }
+  .thesis-cover {
+    display: block; grid-row: span 2; width: 80px; max-width: 100%; height: auto;
+    border: 1px solid var(--border-bright); border-radius: 3px; background: #fff;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25); transition: border-color 0.2s;
+  }
+  .thesis-title {
+    max-width: 30ch; font-family: var(--serif); font-size: 0.95rem;
+    line-height: 1.4; color: var(--text-bright);
+  }
+  .thesis-download {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.7rem; color: var(--blue); transition: color 0.2s;
+  }
+  .thesis-download svg { width: 14px; height: 14px; }
+  .thesis-link:hover .thesis-cover,
+  .thesis-link:focus-visible .thesis-cover { border-color: var(--green); }
+  .thesis-link:hover .thesis-download,
+  .thesis-link:focus-visible .thesis-download { color: var(--green-bright); }
+
   /* PUBLICATIONS */
   .pub-list { display: flex; flex-direction: column; gap: 1rem; }
   .pub-card {
@@ -485,6 +513,17 @@
               <div class="degree">BSc Theoretical Physics</div>
               <div class="school">University of Edinburgh</div>
             </div>
+          </div>
+          <div class="thesis-entry">
+            <h4>DPhil thesis</h4>
+            <a class="thesis-link" href="files/samuel-johnson-dphil-thesis.pdf" download="Samuel_Johnson_DPhil_Thesis.pdf">
+              <img class="thesis-cover" src="images/thesis-cover.webp" alt="Front cover of Samuel Johnson's DPhil thesis" width="600" height="849" loading="lazy" decoding="async">
+              <span class="thesis-title">Mathematical models of single and collective cell migration in the cranial neural crest</span>
+              <span class="thesis-download">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4"/></svg>
+                Download PDF
+              </span>
+            </a>
           </div>
         </div>
       </div>
